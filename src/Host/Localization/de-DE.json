@@ -1,0 +1,21 @@
+{
+  "auth.failed": "Authentifizierung fehlgeschlagen",
+  "tenant.invalid": "Ung�ltiger Mandant",
+  "tenant.expired": "Mandant Laufzeit abgelaufen. Bitte kontaktieren Sie den Administrator.",
+  "tenant.inactive": "Mandant nicht aktiv. Bitte kontaktieren Sie den Administrator.",
+  "caching.added": "Zwischenspeicher hinzugef�gt : {0}",
+  "caching.refreshed": "Zwischenspeicher aktualisiert",
+  "identity.usernotfound": "Benutzer nicht gefunden",
+  "identity.usernotactive": "Benutzer inaktiv. Bitte kontaktieren Sie den Administrator.",
+  "identity.emailnotconfirmed": "Best�tigungs-Mail nicht beantwortet",
+  "identity.invalidcredentials": "Eingabe ung�ltig",
+  "identity.invalidtoken": "Ung�ltiger Token",
+  "identity.invalidrefreshtoken": "Ung�ltige Aktualisierung Token",
+  "entity.notfound": "{0} {1} nicht gefunden",
+  "product.alreadyexists": "Produkt {0} bereits vorhanden",
+  "product.notfound": "Produkt {0} nicht gefunden",
+  "brand.notfound": "Marke {0} nicht gefunden",
+  "brand.cannotbedeleted": "Marke wird verwendet, l�schen nicht m�glich",
+  "brand.alreadyexists": "Marke {0} bereits vorhanden",
+  "exceptionmiddleware.supportmessage": "Zur Problemanalyse �bermitteln Sie die Fehlernummer an den Support"
+}

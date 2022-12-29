@@ -1,0 +1,17 @@
+global using Ardalis.Specification;
+global using FluentValidation;
+global using FSH.Learn.Application.Common.Events;
+global using FSH.Learn.Application.Common.Exceptions;
+global using FSH.Learn.Application.Common.FileStorage;
+global using FSH.Learn.Application.Common.Interfaces;
+global using FSH.Learn.Application.Common.Models;
+global using FSH.Learn.Application.Common.Persistence;
+global using FSH.Learn.Application.Common.Specification;
+global using FSH.Learn.Application.Common.Validation;
+global using FSH.Learn.Domain.Catalog;
+global using FSH.Learn.Domain.Common;
+global using FSH.Learn.Domain.Common.Contracts;
+global using FSH.Learn.Shared.Notifications;
+global using MediatR;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.Extensions.Logging;
