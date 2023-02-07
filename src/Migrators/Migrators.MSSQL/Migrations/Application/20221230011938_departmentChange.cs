@@ -5,40 +5,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Migrators.MSSQL.Migrations.Application
 {
-    public partial class departmentAdd : Migration
+    public partial class departmentChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Description",
-                schema: "Identity",
-                table: "RoleClaims");
-
-            migrationBuilder.DropColumn(
-                name: "Group",
-                schema: "Identity",
-                table: "RoleClaims");
-
-            migrationBuilder.DropColumn(
-                name: "LastModifiedBy",
-                schema: "Identity",
-                table: "RoleClaims");
-
-            migrationBuilder.DropColumn(
-                name: "LastModifiedOn",
-                schema: "Identity",
-                table: "RoleClaims");
-
             migrationBuilder.CreateTable(
                 name: "Departments",
                 schema: "Catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DutyUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TenantId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -57,34 +38,6 @@ namespace Migrators.MSSQL.Migrations.Application
             migrationBuilder.DropTable(
                 name: "Departments",
                 schema: "Catalog");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                schema: "Identity",
-                table: "RoleClaims",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Group",
-                schema: "Identity",
-                table: "RoleClaims",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastModifiedBy",
-                schema: "Identity",
-                table: "RoleClaims",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "LastModifiedOn",
-                schema: "Identity",
-                table: "RoleClaims",
-                type: "datetime2",
-                nullable: true);
         }
     }
 }

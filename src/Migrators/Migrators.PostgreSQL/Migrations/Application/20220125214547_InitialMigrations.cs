@@ -149,12 +149,10 @@ public partial class InitialMigrations : Migration
             {
                 Id = table.Column<int>(type: "integer", nullable: false)
                     .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                Description = table.Column<string>(type: "text", nullable: true),
-                Group = table.Column<string>(type: "text", nullable: true),
+              
                 CreatedBy = table.Column<string>(type: "text", nullable: true),
                 CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                LastModifiedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+             
                 TenantId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                 RoleId = table.Column<string>(type: "text", nullable: false),
                 ClaimType = table.Column<string>(type: "text", nullable: true),

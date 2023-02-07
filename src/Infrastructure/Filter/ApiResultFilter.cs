@@ -73,6 +73,15 @@ public class ApiResult
         Data = resultObject;
         return this;
     }
+    public ApiResult SetSuccessResult( string message,object resultObject)
+    {
+        Code = 200;
+        ResponseDatetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff");
+        Success = true;
+        Message = message;
+        Data = resultObject;
+        return this;
+    }
 
     /// <summary>
     /// 设置API调用结果为失败.

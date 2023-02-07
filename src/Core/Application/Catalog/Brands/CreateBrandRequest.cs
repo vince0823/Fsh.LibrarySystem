@@ -2,7 +2,14 @@ namespace FSH.Learn.Application.Catalog.Brands;
 
 public class CreateBrandRequest : IRequest<Guid>
 {
+    /// <summary>
+    /// Ãû³Æ.
+    /// </summary>
     public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// ÃèÊö.
+    /// </summary>
     public string? Description { get; set; }
 }
 

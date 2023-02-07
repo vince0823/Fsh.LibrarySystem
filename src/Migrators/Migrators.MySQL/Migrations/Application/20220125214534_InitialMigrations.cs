@@ -192,16 +192,11 @@ public partial class InitialMigrations : Migration
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Description = table.Column<string>(type: "longtext", nullable: true)
-                    .Annotation("MySql:CharSet", "utf8mb4"),
-                Group = table.Column<string>(type: "longtext", nullable: true)
-                    .Annotation("MySql:CharSet", "utf8mb4"),
+             
                 CreatedBy = table.Column<string>(type: "longtext", nullable: true)
                     .Annotation("MySql:CharSet", "utf8mb4"),
                 CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                LastModifiedBy = table.Column<string>(type: "longtext", nullable: true)
-                    .Annotation("MySql:CharSet", "utf8mb4"),
-                LastModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+             
                 TenantId = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                     .Annotation("MySql:CharSet", "utf8mb4"),
                 RoleId = table.Column<string>(type: "varchar(255)", nullable: false)

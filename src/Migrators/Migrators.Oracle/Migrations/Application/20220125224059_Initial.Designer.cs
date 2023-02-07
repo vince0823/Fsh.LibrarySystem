@@ -224,17 +224,8 @@ namespace Migrators.Oracle.Migrations.Application
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Group")
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("TIMESTAMP(7)");
+                  
 
                     b.Property<string>("RoleId")
                         .IsRequired()

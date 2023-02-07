@@ -8,7 +8,9 @@ using FSH.Learn.Infrastructure.BackgroundJobs;
 using FSH.Learn.Infrastructure.Common;
 using FSH.Learn.Infrastructure.Filter;
 using Hangfire;
+using Microsoft.AspNetCore.Http;
 using Serilog;
+using System.Net;
 
 [assembly: ApiConventionType(typeof(FSHApiConventions))]
 
@@ -25,7 +27,23 @@ try
         .ReadFrom.Configuration(builder.Configuration);
     });
 
-    builder.Services.AddControllers().AddFluentValidation();
+    builder.Services.AddControllers().AddFluentValidation().ConfigureApiBehaviorOptions(options =>
+    {
+        // 使用自定义模型验证
+        options.InvalidModelStateResponseFactory = (context) =>
+        {
+            var result = new ApiResult()
+            {
+                Code = (int)HttpStatusCode.Conflict,
+                Message = string.Join(",", context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)))
+            };
+            return new JsonResult(result);
+        };
+    }).AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm";
+    });
+
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddApplication();
     builder.Services.AddMvc(options =>

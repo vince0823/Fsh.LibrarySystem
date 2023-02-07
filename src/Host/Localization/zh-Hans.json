@@ -21,5 +21,6 @@
   "department.notfound": "部门 {0} 找不到。",
   "parentDepartment.notfound": "父级部门 {0} 找不到。",
   "user.notfound": "未找到 {0} 用户。",
-  "exceptionmiddleware.supportmessage": "请提供错误代码给支持团队进一步分析。"
+  "exceptionmiddleware.supportmessage": "请提供错误代码给支持团队进一步分析。",
+  "menu.alreadyexists": "菜单 {0} 已经存在。"
 }

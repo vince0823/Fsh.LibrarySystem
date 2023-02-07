@@ -1,5 +1,6 @@
 ﻿using Finbuckle.MultiTenant.EntityFrameworkCore;
 using FSH.Learn.Domain.Catalog;
+using FSH.Learn.Domain.System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -30,5 +31,44 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
         builder
             .Property(p => p.ImagePath)
                 .HasMaxLength(2048);
+    }
+}
+
+public class DepartmentConfig : IEntityTypeConfiguration<Department>
+{
+    public void Configure(EntityTypeBuilder<Department> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Name)
+                .HasMaxLength(1024);
+
+    }
+}
+
+public class MenuConfig : IEntityTypeConfiguration<Menu>
+{
+    public void Configure(EntityTypeBuilder<Menu> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Name)
+                .HasMaxLength(1024);
+
+    }
+}
+
+public class BookRoomConfig : IEntityTypeConfiguration<BookRoom>
+{
+    public void Configure(EntityTypeBuilder<BookRoom> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Name)
+                .HasMaxLength(1024);
+
     }
 }

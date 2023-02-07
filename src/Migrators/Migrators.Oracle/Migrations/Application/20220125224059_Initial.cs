@@ -148,12 +148,10 @@ namespace Migrators.Oracle.Migrations.Application
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
-                    Group = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
+                 
                     CreatedBy = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
-                    LastModifiedOn = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true),
+                   
                     TenantId = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
                     RoleId = table.Column<string>(type: "NVARCHAR2(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),

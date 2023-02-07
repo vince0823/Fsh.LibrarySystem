@@ -1,3 +1,5 @@
+using FSH.Learn.Application.System.Menus;
+
 namespace FSH.Learn.Application.Identity.Roles;
 
 public interface IRoleService : ITransientService
@@ -11,10 +13,12 @@ public interface IRoleService : ITransientService
     Task<RoleDto> GetByIdAsync(string id);
 
     Task<RoleDto> GetByIdWithPermissionsAsync(string roleId, CancellationToken cancellationToken);
+    Task<List<MenuTreeDto>> GetByIdWithMenusAsync(string roleId, CancellationToken cancellationToken);
 
     Task<string> CreateOrUpdateAsync(CreateOrUpdateRoleRequest request);
 
     Task<string> UpdatePermissionsAsync(UpdateRolePermissionsRequest request, CancellationToken cancellationToken);
+    Task<string> UpdateRoleMenusAsync(UpdateRoleMenusRequest request, CancellationToken cancellationToken);
 
     Task<string> DeleteAsync(string id);
 }

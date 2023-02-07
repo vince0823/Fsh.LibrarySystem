@@ -1,10 +1,13 @@
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Finbuckle.MultiTenant;
 using FSH.Learn.Application.Common.Events;
 using FSH.Learn.Application.Common.Exceptions;
 using FSH.Learn.Application.Common.Interfaces;
 using FSH.Learn.Application.Identity;
 using FSH.Learn.Application.Identity.Roles;
+using FSH.Learn.Application.System.Menus;
 using FSH.Learn.Domain.Identity;
+using FSH.Learn.Domain.System;
 using FSH.Learn.Infrastructure.Persistence.Context;
 using FSH.Learn.Shared.Authorization;
 using FSH.Learn.Shared.Multitenancy;
@@ -70,6 +73,48 @@ internal class RoleService : IRoleService
             .ToListAsync(cancellationToken);
 
         return role;
+    }
+
+    public async Task<List<MenuTreeDto>> GetByIdWithMenusAsync(string roleId, CancellationToken cancellationToken)
+    {
+        var role = await GetByIdAsync(roleId);
+        var menuIdList = await _db.RoleMenus.Where(t =>t.RoleId== role.Id).Select(t => t.MenuId).ToListAsync(cancellationToken);
+        var dtoList = new List<MenuTreeDto>();
+        var allmenuList = await _db.Menus.Where(t => menuIdList.Contains(t.Id)).OrderBy(t => t.Order).ToListAsync(cancellationToken);
+        foreach (var parentMenu in allmenuList.Where(t => t.ParentId == null).OrderBy(t => t.Order).ToList())
+        {
+            dtoList.Add(new MenuTreeDto
+            {
+                Id = parentMenu.Id,
+                Name = parentMenu.Name,
+                Url = parentMenu.Url,
+                Icon = parentMenu.Icon,
+                ParentId = parentMenu.ParentId,
+                ChildMenuList = await GetChildren(parentMenu.Id, allmenuList)
+            });
+        }
+
+        return dtoList;
+    }
+
+    private async Task<List<ChildMenu>> GetChildren(Guid pid, List<Menu> allmenuList)
+    {
+        List<Menu> depList = allmenuList.Where(t => t.ParentId == pid).OrderBy(t => t.Order).ToList();
+        List<ChildMenu> list = new List<ChildMenu>();
+        foreach (Menu menu in depList)
+        {
+            list.Add(new ChildMenu
+            {
+                Id = menu.Id,
+                Name = menu.Name,
+                Url = menu.Url,
+                Icon = menu.Icon,
+                ParentId = menu.ParentId,
+                ChildMenuList = await GetChildren(menu.Id, allmenuList)
+            });
+        }
+
+        return list;
     }
 
     public async Task<string> CreateOrUpdateAsync(CreateOrUpdateRoleRequest request)
@@ -163,6 +208,40 @@ internal class RoleService : IRoleService
         await _events.PublishAsync(new ApplicationRoleUpdatedEvent(role.Id, role.Name, true));
 
         return _localizer["Permissions Updated."];
+    }
+
+    public async Task<string> UpdateRoleMenusAsync(UpdateRoleMenusRequest request, CancellationToken cancellationToken)
+    {
+        var role = await _roleManager.FindByIdAsync(request.RoleId);
+        _ = role ?? throw new NotFoundException(_localizer["Role Not Found"]);
+        if (role.Name == FSHRoles.Admin)
+        {
+            throw new ConflictException(_localizer["Not allowed to modify Menu for this Role."]);
+        }
+
+        // 获取该角色的所有菜单
+        var roleMenuIDList = await _db.RoleMenus.Where(t => t.RoleId == role.Id).Select(t => t.MenuId).ToListAsync();
+
+        // Remove menus that were previously selected
+        var selectMenuIdList = roleMenuIDList.Where(c => !request.MenuIdList.Any(p => p == c)).ToList();
+        _db.RoleMenus.RemoveRange(await _db.RoleMenus.Where(t => t.RoleId == role.Id && selectMenuIdList.Contains(t.MenuId)).ToListAsync());
+        await _db.SaveChangesAsync(cancellationToken);
+
+        // Add all menus that were not previously selected
+        foreach (var menuId in request.MenuIdList.Where(c => !roleMenuIDList.Any(p => p == c)))
+        {
+            _db.RoleMenus.Add(new RoleMenu
+            {
+                RoleId = role.Id,
+                MenuId = menuId,
+            });
+            await _db.SaveChangesAsync(cancellationToken);
+
+        }
+
+        await _events.PublishAsync(new ApplicationRoleUpdatedMenuEvent(role.Id, role.Name, true));
+
+        return _localizer["rolemenus Updated."];
     }
 
     public async Task<string> DeleteAsync(string id)

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using FSH.Learn.Application.Identity.Users.Password;
+using FSH.Learn.Application.System.Menus;
 
 namespace FSH.Learn.Application.Identity.Users;
 
@@ -21,6 +22,7 @@ public interface IUserService : ITransientService
     Task<string> AssignRolesAsync(string userId, UserRolesRequest request, CancellationToken cancellationToken);
 
     Task<List<string>> GetPermissionsAsync(string userId, CancellationToken cancellationToken);
+    Task<List<MenuTreeDto>> GetMeunsAsync(string userId, CancellationToken cancellationToken);
     Task<bool> HasPermissionAsync(string userId, string permission, CancellationToken cancellationToken = default);
     Task InvalidatePermissionCacheAsync(string userId, CancellationToken cancellationToken);
 

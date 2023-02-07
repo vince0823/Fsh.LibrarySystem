@@ -10,6 +10,7 @@ using FSH.Learn.Application.Common.Mailing;
 using FSH.Learn.Application.Common.Models;
 using FSH.Learn.Application.Common.Specification;
 using FSH.Learn.Application.Identity.Users;
+using FSH.Learn.Application.System.Menus;
 using FSH.Learn.Domain.Identity;
 using FSH.Learn.Infrastructure.Auth;
 using FSH.Learn.Infrastructure.Mailing;
@@ -154,4 +155,6 @@ internal partial class UserService : IUserService
 
         await _events.PublishAsync(new ApplicationUserUpdatedEvent(user.Id));
     }
+
+  
 }

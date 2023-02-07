@@ -25,6 +25,15 @@ public class ApplicationRoleUpdatedEvent : ApplicationRoleEvent
         PermissionsUpdated = permissionsUpdated;
 }
 
+public class ApplicationRoleUpdatedMenuEvent : ApplicationRoleEvent
+{
+    public bool RoleMenusUpdated { get; set; }
+
+    public ApplicationRoleUpdatedMenuEvent(string roleId, string roleName, bool roleMenusUpdated = false)
+        : base(roleId, roleName) =>
+        RoleMenusUpdated = roleMenusUpdated;
+}
+
 public class ApplicationRoleDeletedEvent : ApplicationRoleEvent
 {
     public bool PermissionsUpdated { get; set; }

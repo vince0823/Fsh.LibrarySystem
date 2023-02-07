@@ -148,12 +148,8 @@ public partial class InitialMigrations : Migration
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Group = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 TenantId = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                 RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),

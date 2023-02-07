@@ -223,17 +223,9 @@ namespace Migrators.PostgreSQL.Migrations.Application
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
+                 
 
-                    b.Property<string>("Group")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                 
 
                     b.Property<string>("RoleId")
                         .IsRequired()

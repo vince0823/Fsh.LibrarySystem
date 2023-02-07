@@ -1,4 +1,5 @@
 using FSH.Learn.Application.Identity.Roles;
+using FSH.Learn.Application.System.Menus;
 
 namespace FSH.Learn.Host.Controllers.Identity;
 
@@ -43,6 +44,27 @@ public class RolesController : VersionNeutralApiController
         }
 
         return Ok(await _roleService.UpdatePermissionsAsync(request, cancellationToken));
+    }
+
+    [HttpGet("{id}/rolemenus")]
+    [MustHavePermission(FSHAction.View, FSHResource.RoleMenu)]
+    [OpenApiOperation("Get role details with its permissions.", "")]
+    public Task<List<MenuTreeDto>> GetByIdWithMenusAsync(string id, CancellationToken cancellationToken)
+    {
+        return _roleService.GetByIdWithMenusAsync(id, cancellationToken);
+    }
+
+    [HttpPut("{id}/rolemenus")]
+    [MustHavePermission(FSHAction.Create, FSHResource.RoleMenu)]
+    [OpenApiOperation("Update a role's rolemenu.", "")]
+    public async Task<ActionResult<string>> UpdateRoleMenusAsync(string id, UpdateRoleMenusRequest request, CancellationToken cancellationToken)
+    {
+        if (id != request.RoleId)
+        {
+            return BadRequest();
+        }
+
+        return Ok(await _roleService.UpdateRoleMenusAsync(request, cancellationToken));
     }
 
     [HttpPost]

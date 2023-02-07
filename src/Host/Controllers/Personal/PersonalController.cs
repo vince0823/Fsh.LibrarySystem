@@ -2,6 +2,7 @@ using System.Security.Claims;
 using FSH.Learn.Application.Auditing;
 using FSH.Learn.Application.Identity.Users;
 using FSH.Learn.Application.Identity.Users.Password;
+using FSH.Learn.Application.System.Menus;
 
 namespace FSH.Learn.Host.Controllers.Identity;
 
@@ -54,6 +55,15 @@ public class PersonalController : VersionNeutralApiController
         return User.GetUserId() is not { } userId || string.IsNullOrEmpty(userId)
             ? Unauthorized()
             : Ok(await _userService.GetPermissionsAsync(userId, cancellationToken));
+    }
+
+    [HttpGet("rolemenus")]
+    [OpenApiOperation("Get menus of currently logged in user.", "")]
+    public async Task<ActionResult<List<MenuTreeDto>>> GetMeunsAsync(CancellationToken cancellationToken)
+    {
+        return User.GetUserId() is not { } userId || string.IsNullOrEmpty(userId)
+            ? Unauthorized()
+            : Ok(await _userService.GetMeunsAsync(userId, cancellationToken));
     }
 
     [HttpGet("logs")]

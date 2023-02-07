@@ -13,6 +13,7 @@ public static class FSHAction
     public const string Generate = nameof(Generate);
     public const string Clean = nameof(Clean);
     public const string Tree = nameof(Tree);
+
     public const string UpgradeSubscription = nameof(UpgradeSubscription);
 }
 
@@ -25,9 +26,12 @@ public static class FSHResource
     public const string UserRoles = nameof(UserRoles);
     public const string Roles = nameof(Roles);
     public const string RoleClaims = nameof(RoleClaims);
+    public const string RoleMenu = nameof(RoleMenu);
     public const string Products = nameof(Products);
     public const string Brands = nameof(Brands);
     public const string Departments = nameof(Departments);
+    public const string Menus = nameof(Menus);
+    public const string BookRooms = nameof(BookRooms);
 }
 
 public static class FSHPermissions
@@ -48,6 +52,8 @@ public static class FSHPermissions
         new("Create Roles", FSHAction.Create, FSHResource.Roles),
         new("Update Roles", FSHAction.Update, FSHResource.Roles),
         new("Delete Roles", FSHAction.Delete, FSHResource.Roles),
+        new("View RoleMenu", FSHAction.View, FSHResource.RoleMenu),
+        new("Create RoleMenu", FSHAction.Create, FSHResource.RoleMenu),
         new("View RoleClaims", FSHAction.View, FSHResource.RoleClaims),
         new("Update RoleClaims", FSHAction.Update, FSHResource.RoleClaims),
         new("View Products", FSHAction.View, FSHResource.Products, IsBasic: true),
@@ -62,6 +68,12 @@ public static class FSHPermissions
         new("Update Departments", FSHAction.Update, FSHResource.Departments),
         new("Delete Departments", FSHAction.Delete, FSHResource.Departments),
         new("Tree Departments", FSHAction.Tree, FSHResource.Departments, IsBasic: true),
+        new("View Menus", FSHAction.View, FSHResource.Menus, IsBasic: true),
+        new("Search Menus", FSHAction.Search, FSHResource.Menus, IsBasic: true),
+        new("Create Menus", FSHAction.Create, FSHResource.Menus),
+        new("Update Menus", FSHAction.Update, FSHResource.Menus),
+        new("Delete Menus", FSHAction.Delete, FSHResource.Menus),
+        new("Tree Menus", FSHAction.Tree, FSHResource.Menus, IsBasic: true),
         new("View Brands", FSHAction.View, FSHResource.Brands, IsBasic: true),
         new("Search Brands", FSHAction.Search, FSHResource.Brands, IsBasic: true),
         new("Create Brands", FSHAction.Create, FSHResource.Brands),
@@ -72,7 +84,12 @@ public static class FSHPermissions
         new("View Tenants", FSHAction.View, FSHResource.Tenants, IsRoot: true),
         new("Create Tenants", FSHAction.Create, FSHResource.Tenants, IsRoot: true),
         new("Update Tenants", FSHAction.Update, FSHResource.Tenants, IsRoot: true),
-        new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true)
+        new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true),
+        new("View BookRooms", FSHAction.View, FSHResource.BookRooms, IsBasic: true),
+        new("Search BookRooms", FSHAction.Search, FSHResource.BookRooms, IsBasic: true),
+        new("Create BookRooms", FSHAction.Create, FSHResource.BookRooms),
+        new("Update BookRooms", FSHAction.Update, FSHResource.BookRooms),
+        new("Delete BookRooms", FSHAction.Delete, FSHResource.BookRooms),
     };
 
     public static IReadOnlyList<FSHPermission> All { get; } = new ReadOnlyCollection<FSHPermission>(_all);
