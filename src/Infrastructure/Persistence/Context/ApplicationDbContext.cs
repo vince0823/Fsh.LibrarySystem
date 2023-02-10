@@ -23,6 +23,7 @@ public class ApplicationDbContext : BaseDbContext
     public DbSet<RoleMenu> RoleMenus => Set<RoleMenu>();
 
     public DbSet<BookRoom> BookRooms => Set<BookRoom>();
+    public DbSet<BookShelf> BookShelfs => Set<BookShelf>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

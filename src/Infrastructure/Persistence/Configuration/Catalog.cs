@@ -72,3 +72,15 @@ public class BookRoomConfig : IEntityTypeConfiguration<BookRoom>
 
     }
 }
+
+public class BookShelfConfig : IEntityTypeConfiguration<BookShelf>
+{
+    public void Configure(EntityTypeBuilder<BookShelf> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Code)
+                .HasMaxLength(1024);
+    }
+}
