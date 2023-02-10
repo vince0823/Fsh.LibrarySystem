@@ -26,20 +26,20 @@ public class BookRoom : AuditableEntity, IAggregateRoot
     /// <summary>
     /// 负责人.
     /// </summary>
-    public Guid? DutyUserId { get; set; }
+    public string? DutyUserId { get; set; }
 
     public BookRoom()
     {
     }
 
-    public BookRoom(string name, string address, Guid? dutyUserId)
+    public BookRoom(string name, string address, string? dutyUserId)
     {
         Name = name;
         Address = address;
         DutyUserId = dutyUserId;
     }
 
-    public BookRoom Update(string name, string address, Guid? dutyUserId)
+    public BookRoom Update(string name, string address, string? dutyUserId)
     {
         if (name is not null && Name?.Equals(name) is not true) Name = name;
         if (address is not null && Address?.Equals(address) is not true) Address = address;
