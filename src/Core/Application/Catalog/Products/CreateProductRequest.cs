@@ -1,4 +1,7 @@
 using FSH.Learn.Domain.Common.Events;
+using FSH.Learn.Domain.Identity;
+using FSH.Learn.Shared.Events;
+using System.Data;
 
 namespace FSH.Learn.Application.Catalog.Products;
 
@@ -15,9 +18,10 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
 {
     private readonly IRepository<Product> _repository;
     private readonly IFileStorageService _file;
+    private readonly IEventPublisher _events;
 
-    public CreateProductRequestHandler(IRepository<Product> repository, IFileStorageService file) =>
-        (_repository, _file) = (repository, file);
+    public CreateProductRequestHandler(IRepository<Product> repository, IFileStorageService file, IEventPublisher @event) =>
+        (_repository, _file, _events) = (repository, file, @event);
 
     public async Task<Guid> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
@@ -30,6 +34,8 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
 
         await _repository.AddAsync(product, cancellationToken);
 
+        // ²âÊÔEventBus
+       // await _events.PublishAsync(new ProductDeleteEvent(product.Id));
         return product.Id;
     }
 }
