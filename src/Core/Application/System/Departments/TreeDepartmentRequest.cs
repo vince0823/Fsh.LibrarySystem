@@ -60,4 +60,3 @@ public class TreeDepartmentRequestHandler : IRequestHandler<TreeDepartmentReques
         return list;
     }
 }
-

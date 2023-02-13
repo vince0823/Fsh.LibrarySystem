@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 namespace FSH.Learn.Application.System.Commands.BookRooms;
 public class DeleteBookRoomCommandHandler : IRequestHandler<DeleteBookRoomCommand, Guid>
 {
-    private readonly IRepository<Department> _repository;
-    public DeleteBookRoomCommandHandler(IRepository<Department> repository)
+    private readonly IRepository<BookRoom> _repository;
+    public DeleteBookRoomCommandHandler(IRepository<BookRoom> repository)
     {
         _repository = repository;
     }
 
     public async Task<Guid> Handle(DeleteBookRoomCommand request, CancellationToken cancellationToken)
     {
-        var department = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var bookRoom = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
-        _ = department ?? throw new NotFoundException("书屋不存在");
+        _ = bookRoom ?? throw new NotFoundException("书屋不存在");
 
         // Add Domain Events to be raised after the commit
-        department.DomainEvents.Add(EntityDeletedEvent.WithEntity(department));
+        bookRoom.DomainEvents.Add(EntityDeletedEvent.WithEntity(bookRoom));
 
-        await _repository.DeleteAsync(department, cancellationToken);
+        await _repository.DeleteAsync(bookRoom, cancellationToken);
 
         return request.Id;
     }

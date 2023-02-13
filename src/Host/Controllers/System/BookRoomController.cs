@@ -18,7 +18,7 @@ public class BookRoomController : VersionedApiController
 
     [HttpPost]
     [MustHavePermission(FSHAction.Create, FSHResource.BookRooms)]
-    [OpenApiOperation("Create a new bookRoom.", "")]
+    [OpenApiOperation("Create a new BookRoom.", "")]
     public Task<Guid> CreateAsync(CreateBookRoomCommand command)
     {
         return Mediator.Send(command);
@@ -26,7 +26,7 @@ public class BookRoomController : VersionedApiController
 
     [HttpGet("{id:guid}")]
     [MustHavePermission(FSHAction.View, FSHResource.BookRooms)]
-    [OpenApiOperation("Get bookRoom details.", "")]
+    [OpenApiOperation("Get BookRoom details.", "")]
     public Task<BookRoomDto> GetAsync(Guid id)
     {
         return Mediator.Send(new GetBookRoomQuery(id));
@@ -34,7 +34,7 @@ public class BookRoomController : VersionedApiController
 
     [HttpPut("{id:guid}")]
     [MustHavePermission(FSHAction.Update, FSHResource.BookRooms)]
-    [OpenApiOperation("Update a bookRoom.", "")]
+    [OpenApiOperation("Update a BookRoom.", "")]
     public async Task<ActionResult<Guid>> UpdateAsync(UpdateBookRoomCommand command, Guid id)
     {
         return id != command.Id
@@ -44,7 +44,7 @@ public class BookRoomController : VersionedApiController
 
     [HttpDelete("{id:guid}")]
     [MustHavePermission(FSHAction.Delete, FSHResource.BookRooms)]
-    [OpenApiOperation("Delete a bookRoom.", "")]
+    [OpenApiOperation("Delete a BookRoom.", "")]
     public Task<Guid> DeleteAsync(Guid id)
     {
         return Mediator.Send(new DeleteBookRoomCommand(id));
