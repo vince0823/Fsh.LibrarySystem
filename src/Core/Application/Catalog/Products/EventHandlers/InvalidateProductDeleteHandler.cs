@@ -17,7 +17,7 @@ internal class InvalidateProductDeleteHandler : IEventNotificationHandler<Produc
     }
 
     /// <summary>
-    /// 此处的Handle 也可以不发送command  直接在此处用 irOS
+    /// 此处的Handle 也可以不发送command  直接在此处用处理请求.
     /// </summary>
     /// <param name="notification"></param>
     /// <param name="cancellationToken"></param>
