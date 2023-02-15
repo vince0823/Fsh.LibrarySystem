@@ -84,3 +84,15 @@ public class BookShelfConfig : IEntityTypeConfiguration<BookShelf>
                 .HasMaxLength(1024);
     }
 }
+
+public class BookShelfLayerConfig : IEntityTypeConfiguration<BookShelfLayer>
+{
+    public void Configure(EntityTypeBuilder<BookShelfLayer> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.LayerName)
+                .HasMaxLength(1024);
+    }
+}

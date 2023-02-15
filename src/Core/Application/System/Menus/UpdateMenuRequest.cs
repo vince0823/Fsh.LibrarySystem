@@ -13,7 +13,8 @@ public class UpdateMenuRequest : IRequest<Guid>
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;
-    public string? Url { get; set; }
+    public string DisPlayName { get; set; } = default!;
+    public string Url { get; set; } = default!;
     public Guid? ParentId { get; set; }
     public string? Icon { get; set; }
     public int Order { get; set; }
@@ -25,7 +26,7 @@ public class UpdateMenuRequestHandler : IRequestHandler<UpdateMenuRequest, Guid>
     private readonly IRepository<Menu> _repository;
     private readonly IStringLocalizer<UpdateMenuRequestHandler> _localizer;
 
-    public UpdateMenuRequestHandler(IRepository<Menu> repository,  IStringLocalizer<UpdateMenuRequestHandler> localizer) =>
+    public UpdateMenuRequestHandler(IRepository<Menu> repository, IStringLocalizer<UpdateMenuRequestHandler> localizer) =>
         (_repository, _localizer) = (repository, localizer);
 
     public async Task<Guid> Handle(UpdateMenuRequest request, CancellationToken cancellationToken)
@@ -41,7 +42,7 @@ public class UpdateMenuRequestHandler : IRequestHandler<UpdateMenuRequest, Guid>
             }
         }
 
-        var updatedMenu = menu.Update(request.Name, request.Url, request.ParentId, request.Icon,request.Order);
+        var updatedMenu = menu.Update(request.Name, request.Url, request.DisPlayName, request.ParentId, request.Icon, request.Order);
 
         // Add Domain Events to be raised after the commit
         menu.DomainEvents.Add(EntityUpdatedEvent.WithEntity(menu));

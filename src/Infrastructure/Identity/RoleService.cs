@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Finbuckle.MultiTenant;
 using FSH.Learn.Application.Common.Events;
@@ -15,6 +16,7 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
 
 namespace FSH.Learn.Infrastructure.Identity;
 
@@ -78,7 +80,7 @@ internal class RoleService : IRoleService
     public async Task<List<MenuTreeDto>> GetByIdWithMenusAsync(string roleId, CancellationToken cancellationToken)
     {
         var role = await GetByIdAsync(roleId);
-        var menuIdList = await _db.RoleMenus.Where(t =>t.RoleId== role.Id).Select(t => t.MenuId).ToListAsync(cancellationToken);
+        var menuIdList = await _db.RoleMenus.Where(t => t.RoleId == role.Id).Select(t => t.MenuId).ToListAsync(cancellationToken);
         var dtoList = new List<MenuTreeDto>();
         var allmenuList = await _db.Menus.Where(t => menuIdList.Contains(t.Id)).OrderBy(t => t.Order).ToListAsync(cancellationToken);
         foreach (var parentMenu in allmenuList.Where(t => t.ParentId == null).OrderBy(t => t.Order).ToList())
@@ -207,8 +209,39 @@ internal class RoleService : IRoleService
 
         await _events.PublishAsync(new ApplicationRoleUpdatedEvent(role.Id, role.Name, true));
 
+        // ÐÞ¸Ä½ÇÉ«²Ëµ¥
+        var menuList = _db.Menus.AsNoTracking().ToList();
+        var selectMenuList = menuList.Where(t => request.MenuNames.Contains(t.Name)).ToList();
+        List<Guid> menuIDList = new List<Guid>();
+        foreach (var menu in selectMenuList)
+        {
+            List<Guid> selectMenuIdList = new List<Guid>();
+            GetParents(menu, menuList, ref selectMenuIdList);
+            menuIDList.AddRange(selectMenuIdList);
+        }
+
+        UpdateRoleMenusRequest updateRoleMenusRequest = new UpdateRoleMenusRequest()
+        {
+            RoleId = request.RoleId,
+            MenuIdList = menuIDList.Distinct().ToList()
+        };
+        await UpdateRoleMenusAsync(updateRoleMenusRequest, cancellationToken);
         return _localizer["Permissions Updated."];
     }
+
+    private void GetParents(Menu menu, List<Menu> menus, ref List<Guid> MenuIdList)
+    {
+        MenuIdList.Add(menu.Id);
+        var parentMenu = menus.FirstOrDefault(x => x.Id == menu.ParentId);
+        if (parentMenu != null)
+        {
+            //µÝ¹é
+            GetParents(parentMenu, menus, ref MenuIdList);
+        }
+
+    }
+
+
 
     public async Task<string> UpdateRoleMenusAsync(UpdateRoleMenusRequest request, CancellationToken cancellationToken)
     {

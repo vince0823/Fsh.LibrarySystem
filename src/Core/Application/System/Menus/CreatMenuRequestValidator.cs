@@ -21,6 +21,8 @@ public class CreatMenuRequestValidator : CustomValidator<CreatMenuRequest>
                 .WithMessage((_, name) => string.Format(localizer["menu.alreadyexists"], name));
         RuleFor(p => p.Url)
             .NotEmpty().WithMessage("请输入菜单地址");
+        RuleFor(p => p.DisplayName)
+         .NotEmpty().WithMessage("请输入别名");
         RuleFor(p => p.Icon)
            .NotEmpty().WithMessage("请输入菜单图标");
         RuleFor(p => p.Order).NotNull().MustAsync(async (order, ct) => await IsNumber(order, ct)).WithMessage("请输入正确的排序");

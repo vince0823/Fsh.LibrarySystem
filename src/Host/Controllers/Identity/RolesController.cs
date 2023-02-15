@@ -48,7 +48,7 @@ public class RolesController : VersionNeutralApiController
 
     [HttpGet("{id}/rolemenus")]
     [MustHavePermission(FSHAction.View, FSHResource.RoleMenu)]
-    [OpenApiOperation("Get role details with its permissions.", "")]
+    [OpenApiOperation("Get rolemenu details with its permissions.", "")]
     public Task<List<MenuTreeDto>> GetByIdWithMenusAsync(string id, CancellationToken cancellationToken)
     {
         return _roleService.GetByIdWithMenusAsync(id, cancellationToken);

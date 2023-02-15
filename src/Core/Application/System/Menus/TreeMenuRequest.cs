@@ -32,8 +32,9 @@ public class TreeMenuRequestHandler : IRequestHandler<TreeMenuRequest, List<Menu
             {
                 Id = parentMenu.Id,
                 Name = parentMenu.Name,
-                Url= parentMenu.Url,
-                Icon= parentMenu.Icon,
+                DisPlayName = parentMenu.DisPlayName,
+                Url = parentMenu.Url,
+                Icon = parentMenu.Icon,
                 ParentId = parentMenu.ParentId,
                 ChildMenuList = await GetChildren(parentMenu.Id)
             });
@@ -52,6 +53,7 @@ public class TreeMenuRequestHandler : IRequestHandler<TreeMenuRequest, List<Menu
             {
                 Id = menu.Id,
                 Name = menu.Name,
+                DisPlayName = menu.DisPlayName,
                 Url = menu.Url,
                 Icon = menu.Icon,
                 ParentId = menu.ParentId,

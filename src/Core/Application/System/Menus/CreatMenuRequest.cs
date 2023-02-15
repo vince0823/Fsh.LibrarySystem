@@ -12,6 +12,7 @@ namespace FSH.Learn.Application.System.Menus;
 public class CreatMenuRequest : IRequest<Guid>
 {
     public string Name { get; set; } = default!;
+    public string DisplayName { get; set; } = default!;
     public string Url { get; set; }
     public Guid? ParentId { get; set; }
     public string Icon { get; set; }
@@ -35,7 +36,7 @@ public class CreatMenuRequestRequesHandler : IRequestHandler<CreatMenuRequest, G
             }
         }
 
-        var menu = new Menu(request.Name, request.Url, request.ParentId, request.Icon, request.Order);
+        var menu = new Menu(request.Name, request.Url, request.DisplayName, request.ParentId, request.Icon, request.Order);
 
         // Add Domain Events to be raised after the commit
         menu.DomainEvents.Add(EntityCreatedEvent.WithEntity(menu));

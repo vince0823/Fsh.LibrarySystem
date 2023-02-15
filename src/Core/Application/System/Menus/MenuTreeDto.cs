@@ -9,7 +9,8 @@ namespace FSH.Learn.Application.System.Menus;
 public class MenuTreeDto
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
+    public string DisPlayName { get; set; } = default!;
     public string Url { get; set; } = default!;
     public string Icon { get; set; } = default!;
     public Guid? ParentId { get; set; }
@@ -21,6 +22,7 @@ public class ChildMenu
     public Guid Id { get; set; }
     public Guid? ParentId { get; set; }
     public string Name { get; set; } = default!;
+    public string DisPlayName { get; set; } = default!;
     public string Url { get; set; } = default!;
     public string Icon { get; set; } = default!;
     public List<ChildMenu>? ChildMenuList { get; set; }

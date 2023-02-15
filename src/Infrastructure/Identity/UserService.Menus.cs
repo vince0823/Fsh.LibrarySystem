@@ -29,6 +29,7 @@ internal partial class UserService
             {
                 Id = parentMenu.Id,
                 Name = parentMenu.Name,
+                DisPlayName = parentMenu.DisPlayName,
                 Url = parentMenu.Url,
                 Icon = parentMenu.Icon,
                 ParentId = parentMenu.ParentId,
@@ -50,6 +51,7 @@ internal partial class UserService
             {
                 Id = menu.Id,
                 Name = menu.Name,
+                DisPlayName = menu.DisPlayName,
                 Url = menu.Url,
                 Icon = menu.Icon,
                 ParentId = menu.ParentId,
