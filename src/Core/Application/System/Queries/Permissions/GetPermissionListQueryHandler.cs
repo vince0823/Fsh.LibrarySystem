@@ -29,7 +29,8 @@ public class GetPermissionListQueryHandler : IRequestHandler<GetPermissionListQu
             { "Departments", "部门" },
             { "Menus", "菜单" },
             { "BookRooms", "书屋" },
-            { "BookShelfs", "书架" }
+            { "BookShelfs", "书架" },
+            { "BookShelfLayers", "书层" },
         };
 
         var values = typeof(FSHResource).GetFields(BindingFlags.Static | BindingFlags.Public)

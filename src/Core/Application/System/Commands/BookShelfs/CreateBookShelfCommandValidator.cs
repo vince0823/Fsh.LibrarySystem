@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace FSH.Learn.Application.System.Commands.BookShelfs;
 public class CreateBookShelfCommandValidator : CustomValidator<CreateBookShelfCommand>
 {
-    public CreateBookShelfCommandValidator(IReadRepository<BookShelf> repository, IReadRepository<BookRoom> bookRoomRepository, IStringLocalizer<CreateBookShelfCommandValidator> localizer)
+    public CreateBookShelfCommandValidator(IReadRepository<BookShelf> repository, IReadRepository<BookRoom> bookRoomRepository)
     {
         RuleFor(p => p.Code)
            .NotEmpty()
            .MaximumLength(75)
-           .MustAsync(async (command,code, ct) => await repository.GetBySpecAsync(new BookShelfByCodeSpec(code, command.BookRoomId), ct) is null)
+           .MustAsync(async (command, code, ct) => await repository.GetBySpecAsync(new BookShelfByCodeSpec(code, command.BookRoomId), ct) is null)
                .WithMessage("书架编号已存在");
         RuleFor(p => p.BookRoomId).NotEmpty().MustAsync(async (bookRoomId, ct) => await bookRoomRepository.GetByIdAsync(bookRoomId, ct) is not null)
             .WithMessage("书屋不存在");

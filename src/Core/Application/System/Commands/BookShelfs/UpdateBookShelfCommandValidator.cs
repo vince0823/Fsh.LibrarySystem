@@ -14,7 +14,7 @@ public class UpdateBookShelfCommandValidator : CustomValidator<UpdateBookShelfCo
         RuleFor(p => p.Code)
            .NotEmpty()
            .MaximumLength(75)
-           .MustAsync(async (command, code, ct) => await repository.GetBySpecAsync(new BookShelfByCodeSpec(code, command.Id, command.BookRoomId), ct) is null)
+           .MustAsync(async (command, code, ct) => await repository.GetBySpecAsync(new BookShelfByCodeSpec(code, command.BookRoomId, command.Id), ct) is null)
                .WithMessage("书架编号已存在");
         RuleFor(p => p.BookRoomId).NotEmpty().MustAsync(async (bookRoomId, ct) => await bookRoomRepository.GetByIdAsync(bookRoomId, ct) is not null)
             .WithMessage("书屋不存在");

@@ -33,6 +33,7 @@ public static class FSHResource
     public const string Menus = nameof(Menus);
     public const string BookRooms = nameof(BookRooms);
     public const string BookShelfs = nameof(BookShelfs);
+    public const string BookShelfLayers = nameof(BookShelfLayers);
 }
 
 public static class FSHPermissions
@@ -96,6 +97,13 @@ public static class FSHPermissions
         new("Create BookShelfs", FSHAction.Create, FSHResource.BookShelfs),
         new("Update BookShelfs", FSHAction.Update, FSHResource.BookShelfs),
         new("Delete BookShelfs", FSHAction.Delete, FSHResource.BookShelfs),
+        new("View BookShelfLayers", FSHAction.View, FSHResource.BookShelfLayers, IsBasic: true),
+        new("Search BookShelfLayers", FSHAction.Search, FSHResource.BookShelfLayers, IsBasic: true),
+        new("Tree BookShelfLayers", FSHAction.Tree, FSHResource.BookShelfLayers, IsBasic: true),
+        new("Create BookShelfLayers", FSHAction.Create, FSHResource.BookShelfLayers),
+        new("Update BookShelfLayers", FSHAction.Update, FSHResource.BookShelfLayers),
+        new("Delete BookShelfLayers", FSHAction.Delete, FSHResource.BookShelfLayers)
+
     };
 
     public static IReadOnlyList<FSHPermission> All { get; } = new ReadOnlyCollection<FSHPermission>(_all);
