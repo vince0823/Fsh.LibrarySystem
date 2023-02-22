@@ -13,7 +13,6 @@ public class GetBookShelfLayerQueryHandler : IRequestHandler<GetBookShelfLayerQu
 {
     private readonly IRepository<BookShelfLayer> _repository;
     private readonly IBookShelfLayerService _bookShelfLayerService;
-
     public GetBookShelfLayerQueryHandler(IRepository<BookShelfLayer> repository, IBookShelfLayerService bookShelfLayerService) =>
         (_repository, _bookShelfLayerService) = (repository, bookShelfLayerService);
 
@@ -23,7 +22,6 @@ public class GetBookShelfLayerQueryHandler : IRequestHandler<GetBookShelfLayerQu
              (ISpecification<BookShelfLayer, BookShelfLayerDto>)new BookShelfLayerByIdWithBookShelfSpec(query.Id), cancellationToken);
         if (dto is null)
         {
-
             throw new NotFoundException("未找到该书架层");
         }
 

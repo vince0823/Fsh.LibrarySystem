@@ -1,9 +1,20 @@
 ﻿using FSH.Learn.Application.Catalog.Brands;
+using FSH.Learn.Application.Documents;
+using FSH.Learn.Application.Services.ImportSheet;
+using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
 
 namespace FSH.Learn.Host.Controllers.Catalog;
 
 public class BrandsController : VersionedApiController
 {
+    private readonly IExcelService _excelService;
+    public BrandsController(IExcelService excelService)
+    {
+        _excelService = excelService;
+    }
+
+
     [HttpPost("search")]
     [MustHavePermission(FSHAction.Search, FSHResource.Brands)]
     [OpenApiOperation("Search brands using available filters.", "")]
@@ -62,4 +73,17 @@ public class BrandsController : VersionedApiController
     {
         return Mediator.Send(new DeleteRandomBrandRequest());
     }
+
+    [AllowAnonymous]
+    [HttpPost("Sheet")]
+    [OpenApiOperation("ImportSheet brands.", "")]
+    public async Task<ImportSheetResultDto> ImportSheetAsync([FromForm] IFormFile file)
+    {
+        SpreadSheetValidator.EnsureExtensionIsValid(file.FileName);
+        await using var stream = file.OpenReadStream();
+        var rowValues = _excelService.ReadValues(stream);
+
+        return await Mediator.Send(new ImportBrandsFromSheetCommand(rowValues));
+    }
+
 }

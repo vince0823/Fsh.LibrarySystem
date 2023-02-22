@@ -8,6 +8,7 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
         <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.0.1" />
         <PackageReference Include="ClosedXML" Version="0.95.4" />
         <PackageReference Include="Dapper" Version="2.0.123" />
@@ -40,6 +41,7 @@
         <PackageReference Include="MimeKit" Version="3.1.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+        <PackageReference Include="NPOI" Version="2.6.0" />
         <PackageReference Include="NSwag.AspNetCore" Version="13.15.10" />
         <PackageReference Include="RazorEngineCore" Version="2022.1.2" />
         <PackageReference Include="ZymLabs.NSwag.FluentValidation.AspNetCore" Version="0.5.1" />
