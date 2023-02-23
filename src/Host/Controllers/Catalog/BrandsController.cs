@@ -74,8 +74,8 @@ public class BrandsController : VersionedApiController
         return Mediator.Send(new DeleteRandomBrandRequest());
     }
 
-    [AllowAnonymous]
     [HttpPost("Sheet")]
+    [MustHavePermission(FSHAction.Import, FSHResource.Brands)]
     [OpenApiOperation("ImportSheet brands.", "")]
     public async Task<ImportSheetResultDto> ImportSheetAsync([FromForm] IFormFile file)
     {

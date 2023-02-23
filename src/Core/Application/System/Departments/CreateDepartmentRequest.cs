@@ -29,7 +29,7 @@ public class CreateDepartmentRequesHandler : IRequestHandler<CreateDepartmentReq
 
         if (request.ParentId is not null)
         {
-            var parentDepartment = _repository.GetByIdAsync(request.ParentId);
+            var parentDepartment = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
             if (parentDepartment == null)
             {
                 throw new NotFoundException("parentDepartment Not Found.");
