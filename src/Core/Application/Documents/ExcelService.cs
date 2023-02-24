@@ -150,7 +150,7 @@ internal class ExcelService : IExcelService
 
             // sheet.RemoveAndShiftRow(fieldRow);
 
-            workbook.Write(sm, false);
+            workbook.Write(sm, true);
             sm.Seek(0, SeekOrigin.Begin);
         });
 

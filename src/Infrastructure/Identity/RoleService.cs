@@ -210,38 +210,9 @@ internal class RoleService : IRoleService
         await _events.PublishAsync(new ApplicationRoleUpdatedEvent(role.Id, role.Name, true));
 
         // ÐÞ¸Ä½ÇÉ«²Ëµ¥
-        var menuList = _db.Menus.AsNoTracking().ToList();
-        var selectMenuList = menuList.Where(t => request.MenuNames.Contains(t.Name)).ToList();
-        List<Guid> menuIDList = new List<Guid>();
-        foreach (var menu in selectMenuList)
-        {
-            List<Guid> selectMenuIdList = new List<Guid>();
-            GetParents(menu, menuList, ref selectMenuIdList);
-            menuIDList.AddRange(selectMenuIdList);
-        }
-
-        UpdateRoleMenusRequest updateRoleMenusRequest = new UpdateRoleMenusRequest()
-        {
-            RoleId = request.RoleId,
-            MenuIdList = menuIDList.Distinct().ToList()
-        };
-        await UpdateRoleMenusAsync(updateRoleMenusRequest, cancellationToken);
+        await _events.PublishAsync(new UpdateRoleMenuEvent(role.Id, request.MenuNames));
         return _localizer["Permissions Updated."];
     }
-
-    private void GetParents(Menu menu, List<Menu> menus, ref List<Guid> MenuIdList)
-    {
-        MenuIdList.Add(menu.Id);
-        var parentMenu = menus.FirstOrDefault(x => x.Id == menu.ParentId);
-        if (parentMenu != null)
-        {
-            //µÝ¹é
-            GetParents(parentMenu, menus, ref MenuIdList);
-        }
-
-    }
-
-
 
     public async Task<string> UpdateRoleMenusAsync(UpdateRoleMenusRequest request, CancellationToken cancellationToken)
     {

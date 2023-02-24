@@ -35,7 +35,7 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
         await _repository.AddAsync(product, cancellationToken);
 
         // ²âÊÔEventBus
-       // await _events.PublishAsync(new ProductDeleteEvent(product.Id));
+       //await _events.PublishAsync(new ProductDeleteEvent(product.Id));
         return product.Id;
     }
 }

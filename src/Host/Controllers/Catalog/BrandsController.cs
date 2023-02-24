@@ -9,11 +9,12 @@ namespace FSH.Learn.Host.Controllers.Catalog;
 public class BrandsController : VersionedApiController
 {
     private readonly IExcelService _excelService;
-    public BrandsController(IExcelService excelService)
+    private readonly IBrandService _brandService;
+    public BrandsController(IExcelService excelService, IBrandService brandService)
     {
         _excelService = excelService;
+        _brandService = brandService;
     }
-
 
     [HttpPost("search")]
     [MustHavePermission(FSHAction.Search, FSHResource.Brands)]
@@ -84,6 +85,23 @@ public class BrandsController : VersionedApiController
         var rowValues = _excelService.ReadValues(stream);
 
         return await Mediator.Send(new ImportBrandsFromSheetCommand(rowValues));
+    }
+
+
+    [HttpPost("Export")]
+    [MustHavePermission(FSHAction.Export, FSHResource.Brands)]
+    [OpenApiOperation("ExportSheet brands.", "")]
+    public async Task<IActionResult> ExportSheetAsync()
+    {
+
+        var sources = await _brandService.GetBrands();
+        string folder = Path.Combine(Directory.GetCurrentDirectory(), "Files/Templates");
+        string path = Path.Combine(folder, "brand_form.xlsx");
+        var fileStream = new FileStream(path, FileMode.Open);
+        var lastStream = _excelService.WriteCollection(fileStream, sources);
+        this.HttpContext.Response.Headers.Add("Content-Length", lastStream.Length.ToString());
+        this.HttpContext.Response.Headers.Add("Content-Type", "charset=UTF-8");
+        return File(lastStream, "application/octet-stream;charset=UTF-8", Path.GetFileName(path));
     }
 
 }

@@ -85,6 +85,7 @@ public static class FSHPermissions
         new("Generate Brands", FSHAction.Generate, FSHResource.Brands),
         new("Clean Brands", FSHAction.Clean, FSHResource.Brands),
         new("Import Brands", FSHAction.Import, FSHResource.Brands, IsBasic: true),
+        new("Export Brands", FSHAction.Export, FSHResource.Brands, IsBasic: true),
         new("View Tenants", FSHAction.View, FSHResource.Tenants, IsRoot: true),
         new("Create Tenants", FSHAction.Create, FSHResource.Tenants, IsRoot: true),
         new("Update Tenants", FSHAction.Update, FSHResource.Tenants, IsRoot: true),
