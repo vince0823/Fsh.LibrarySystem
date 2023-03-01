@@ -22,6 +22,11 @@ internal class BackBookCommandHandler : IRequestHandler<BackBookCommand, Guid>
     {
         var book = await _repository.GetByIdAsync(command.Id, cancellationToken);
         _ = book ?? throw new NotFoundException("书籍不存在");
+        if (!book.IsBorrowed)
+        {
+            throw new ConflictException("该书本已归还");
+        }
+
         book.Back(false);
         await _repository.UpdateAsync(book, cancellationToken);
         await _events.PublishAsync(new BookRecordAddEvent(book.Id, BookRecordType.Back));
