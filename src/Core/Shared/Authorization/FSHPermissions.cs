@@ -14,6 +14,8 @@ public static class FSHAction
     public const string Generate = nameof(Generate);
     public const string Clean = nameof(Clean);
     public const string Tree = nameof(Tree);
+    public const string Borrowed = nameof(Borrowed);
+    public const string Back = nameof(Back);
 
     public const string UpgradeSubscription = nameof(UpgradeSubscription);
 }
@@ -35,6 +37,7 @@ public static class FSHResource
     public const string BookRooms = nameof(BookRooms);
     public const string BookShelfs = nameof(BookShelfs);
     public const string BookShelfLayers = nameof(BookShelfLayers);
+    public const string Book = nameof(Book);
 }
 
 public static class FSHPermissions
@@ -105,7 +108,17 @@ public static class FSHPermissions
         new("Tree BookShelfLayers", FSHAction.Tree, FSHResource.BookShelfLayers, IsBasic: true),
         new("Create BookShelfLayers", FSHAction.Create, FSHResource.BookShelfLayers),
         new("Update BookShelfLayers", FSHAction.Update, FSHResource.BookShelfLayers),
-        new("Delete BookShelfLayers", FSHAction.Delete, FSHResource.BookShelfLayers)
+        new("Delete BookShelfLayers", FSHAction.Delete, FSHResource.BookShelfLayers),
+
+        new("View Book", FSHAction.View, FSHResource.Book, IsBasic: true),
+        new("Search Book", FSHAction.Search, FSHResource.Book, IsBasic: true),
+        new("Create Book", FSHAction.Create, FSHResource.Book),
+        new("Update Book", FSHAction.Update, FSHResource.Book),
+        new("Delete Book", FSHAction.Delete, FSHResource.Book),
+        new("Borrowed Book", FSHAction.Borrowed, FSHResource.Book),
+        new("Back Book", FSHAction.Back, FSHResource.Book),
+        new("Export Book", FSHAction.Export, FSHResource.Book, IsBasic: true),
+        new("Import Book", FSHAction.Import, FSHResource.Book, IsBasic: true),
 
     };
 

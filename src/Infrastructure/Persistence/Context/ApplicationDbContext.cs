@@ -25,6 +25,8 @@ public class ApplicationDbContext : BaseDbContext
     public DbSet<BookRoom> BookRooms => Set<BookRoom>();
     public DbSet<BookShelf> BookShelfs => Set<BookShelf>();
     public DbSet<BookShelfLayer> BookShelfLayers => Set<BookShelfLayer>();
+    public DbSet<Book> Books => Set<Book>();
+    public DbSet<BookRecord> BookRecords => Set<BookRecord>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

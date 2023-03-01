@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 namespace FSH.Learn.Infrastructure.Services;
 public class BookShelfLayerService : IBookShelfLayerService
 {
-    private readonly IReadRepository<BookRoom> _roomRepository;
-    private readonly IReadRepository<BookShelf> _shelfRepository;
-    private readonly IReadRepository<BookShelfLayer> _layerRepository;
+    private readonly IRepository<BookRoom> _roomRepository;
+    private readonly IRepository<BookShelf> _shelfRepository;
+    private readonly IRepository<BookShelfLayer> _layerRepository;
 
-    public BookShelfLayerService(IReadRepository<BookRoom> roomRepository, IReadRepository<BookShelf> shelfRepository, IReadRepository<BookShelfLayer> layerRepository)
+    public BookShelfLayerService(IRepository<BookRoom> roomRepository, IRepository<BookShelf> shelfRepository, IRepository<BookShelfLayer> layerRepository)
     {
         _roomRepository = roomRepository;
         _shelfRepository = shelfRepository;

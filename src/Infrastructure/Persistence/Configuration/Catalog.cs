@@ -96,3 +96,27 @@ public class BookShelfLayerConfig : IEntityTypeConfiguration<BookShelfLayer>
                 .HasMaxLength(1024);
     }
 }
+
+public class BookConfig : IEntityTypeConfiguration<Book>
+{
+    public void Configure(EntityTypeBuilder<Book> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Name)
+                .HasMaxLength(1024);
+
+        // 建立索引
+        builder.HasIndex(v => new { v.Name, v.IsBorrowed, v.Author, v.BookType });
+    }
+}
+
+public class BookRecordConfig : IEntityTypeConfiguration<BookRecord>
+{
+    public void Configure(EntityTypeBuilder<BookRecord> builder)
+    {
+        builder.IsMultiTenant();
+    }
+}
+
