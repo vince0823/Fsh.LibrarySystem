@@ -1,14 +1,18 @@
-﻿using FSH.Learn.Application.System.Commands.Books;
-using FSH.Learn.Application.System.Commands.BookShelfLayers;
+﻿using FSH.Learn.Application.Documents;
+using FSH.Learn.Application.Services.ImportSheet;
+using FSH.Learn.Application.System.Commands.Books;
 using FSH.Learn.Application.System.Queries.Books;
-using FSH.Learn.Application.System.Queries.BookShelfLayers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace FSH.Learn.Host.Controllers.System;
 
 public class BookController : VersionedApiController
 {
+
+    private readonly IExcelService _excelService;
+    public BookController(IExcelService excelService)
+    {
+        _excelService = excelService;
+    }
+
     [HttpPost("search")]
     [MustHavePermission(FSHAction.Search, FSHResource.Book)]
     [OpenApiOperation("Search Book using available filters.", "")]
@@ -66,4 +70,32 @@ public class BookController : VersionedApiController
     {
         return Mediator.Send(new BackBookCommand(id));
     }
+
+    [HttpPost("Sheet")]
+    [MustHavePermission(FSHAction.Import, FSHResource.Brands)]
+    [OpenApiOperation("ImportSheet brands.", "")]
+    public async Task<ImportSheetResultDto> ImportSheetAsync([FromForm] IFormFile file)
+    {
+        SpreadSheetValidator.EnsureExtensionIsValid(file.FileName);
+        await using var stream = file.OpenReadStream();
+        var rowValues = _excelService.ReadValues(stream);
+
+        return await Mediator.Send(new ImportBooksFromSheetCommand(rowValues));
+    }
+
+    //[HttpPost("Export")]
+    //[MustHavePermission(FSHAction.Export, FSHResource.Brands)]
+    //[OpenApiOperation("ExportSheet brands.", "")]
+    //public async Task<IActionResult> ExportSheetAsync()
+    //{
+
+    //    var sources = await _brandService.GetBrands();
+    //    string folder = Path.Combine(Directory.GetCurrentDirectory(), "Files/Templates");
+    //    string path = Path.Combine(folder, "brand_form.xlsx");
+    //    var fileStream = new FileStream(path, FileMode.Open);
+    //    var lastStream = _excelService.WriteCollection(fileStream, sources);
+    //    this.HttpContext.Response.Headers.Add("Content-Length", lastStream.Length.ToString());
+    //    this.HttpContext.Response.Headers.Add("Content-Type", "charset=UTF-8");
+    //    return File(lastStream, "application/octet-stream;charset=UTF-8", Path.GetFileName(path));
+    //}
 }

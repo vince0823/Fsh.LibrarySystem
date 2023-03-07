@@ -24,7 +24,7 @@ internal class InvalidateBookRecordAddHandler : IEventNotificationHandler<BookRe
         var command = new BookRecordAddCommand(
               notification.Event.BookId,
               notification.Event.BookRecordType);
-        //await _sender.Send(command, cancellationToken);
+        // await _sender.Send(command, cancellationToken);
         await _bookRecordAddService.BookRecordAdd(command, cancellationToken);
     }
 }

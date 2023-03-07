@@ -12,5 +12,6 @@ public class BookShelfLayerByLayerNameSpec : Specification<BookShelfLayer>, ISin
       Query.Where(b => b.LayerName == layerName && b.BookShelfId == bookShelfId);
     public BookShelfLayerByLayerNameSpec(string layerName, Guid bookShelfId, Guid oldId) =>
      Query.Where(b => b.LayerName == layerName && b.BookShelfId == bookShelfId && b.Id != oldId);
-
+    public BookShelfLayerByLayerNameSpec(string layerName) =>
+     Query.Where(b => b.LayerName == layerName);
 }

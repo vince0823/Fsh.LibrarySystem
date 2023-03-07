@@ -7,6 +7,7 @@
     <ItemGroup>
         <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
         <PackageReference Include="NewId" Version="4.0.0-develop.44" />
+        <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Shared\Shared.csproj" />

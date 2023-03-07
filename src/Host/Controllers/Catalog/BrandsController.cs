@@ -87,7 +87,6 @@ public class BrandsController : VersionedApiController
         return await Mediator.Send(new ImportBrandsFromSheetCommand(rowValues));
     }
 
-
     [HttpPost("Export")]
     [MustHavePermission(FSHAction.Export, FSHResource.Brands)]
     [OpenApiOperation("ExportSheet brands.", "")]

@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using FSH.Learn.Application.Documents.Models;
+using FSH.Learn.Domain.System.EnumExt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,17 +40,19 @@ public class ImportService : IImportService
             var propertyType = property.PropertyType;
             try
             {
-                if (val is IConvertible && propertyType != val.GetType())
-                {
-                    val = Convert.ChangeType(val, propertyType);
-                }
-
                 if (propertyType == typeof(bool))
                     val = GetBool(val, _valueMapping);
 
                 if (propertyType == typeof(string))
                     val = val?.ToString();
-
+                if(propertyType== typeof(BookType))
+                {
+                    val = EnumManager.GetEnumByDisplayName<BookType>(val.ToString());
+                }
+                if (val is IConvertible && propertyType != val.GetType())
+                {
+                    val = Convert.ChangeType(val, propertyType);
+                }
                 property.SetValue(instance, val);
             }
             catch (Exception e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,5 +73,46 @@ public static class EnumManager
             .GetCustomAttribute<DisplayAttribute>();
         return displayAttr?.Name ?? fieldName;
     }
+
+    public static T GetEnumByDisplayName<T>(string displayName) where T : struct
+    {
+        Type type = typeof(T);
+        string[] names = Enum.GetNames(type);
+        string[] array = names;
+        foreach (string text in array)
+        {
+            DisplayAttribute customAttribute = type.GetField(text).GetCustomAttribute<DisplayAttribute>();
+            T result;
+            if (customAttribute == null)
+            {
+                if (text == displayName && Enum.TryParse(text, out result))
+                {
+                    return result;
+                }
+                continue;
+            }
+            string a;
+            if (customAttribute.ResourceType == null && string.IsNullOrEmpty(customAttribute.Name))
+            {
+                a = text;
+            }
+            else if (!(customAttribute.ResourceType != null))
+            {
+                a = (string.IsNullOrEmpty(customAttribute.Name) ? text : customAttribute.Name);
+            }
+            else
+            {
+                ResourceManager resourceManager = new ResourceManager(customAttribute.ResourceType);
+                a = resourceManager.GetString(customAttribute.Name);
+            }
+
+            if (a == displayName && Enum.TryParse(text, out result))
+            {
+                return result;
+            }
+        }
+        return (T)Enum.Parse(type, "0");
+    }
+
 }
 
