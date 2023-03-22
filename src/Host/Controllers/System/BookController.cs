@@ -1,6 +1,7 @@
 ﻿using FSH.Learn.Application.Documents;
 using FSH.Learn.Application.Services.ImportSheet;
 using FSH.Learn.Application.System.Commands.Books;
+using FSH.Learn.Application.System.IServices;
 using FSH.Learn.Application.System.Queries.Books;
 namespace FSH.Learn.Host.Controllers.System;
 
@@ -8,10 +9,11 @@ public class BookController : VersionedApiController
 {
 
     private readonly IExcelService _excelService;
-   // private readonly IBookService _excelService;
-    public BookController(IExcelService excelService)
+    private readonly IBookService _bookService;
+    public BookController(IExcelService excelService, IBookService bookService)
     {
         _excelService = excelService;
+        _bookService = bookService;
     }
 
     [HttpPost("search")]
@@ -84,19 +86,19 @@ public class BookController : VersionedApiController
         return await Mediator.Send(new ImportBooksFromSheetCommand(rowValues));
     }
 
-    //[HttpPost("Export")]
-    //[MustHavePermission(FSHAction.Export, FSHResource.Brands)]
-    //[OpenApiOperation("ExportSheet brands.", "")]
-    //public async Task<IActionResult> ExportSheetAsync()
-    //{
+    [HttpPost("Export")]
+    [MustHavePermission(FSHAction.Export, FSHResource.Brands)]
+    [OpenApiOperation("ExportSheet brands.", "")]
+    public async Task<IActionResult> ExportSheetAsync(CancellationToken cancellationToken)
+    {
 
-    //    var sources = "";//await _brandService.GetBrands();
-    //    string folder = Path.Combine(Directory.GetCurrentDirectory(), "Files/Templates");
-    //    string path = Path.Combine(folder, "brand_form.xlsx");
-    //    var fileStream = new FileStream(path, FileMode.Open);
-    //    var lastStream = _excelService.WriteCollection(fileStream, sources);
-    //    this.HttpContext.Response.Headers.Add("Content-Length", lastStream.Length.ToString());
-    //    this.HttpContext.Response.Headers.Add("Content-Type", "charset=UTF-8");
-    //    return File(lastStream, "application/octet-stream;charset=UTF-8", Path.GetFileName(path));
-    //}
+        var sources = await _bookService.GetBooks(cancellationToken);
+        string folder = Path.Combine(Directory.GetCurrentDirectory(), "Files/Templates");
+        string path = Path.Combine(folder, "book-form.xlsx");
+        var fileStream = new FileStream(path, FileMode.Open);
+        var lastStream = _excelService.WriteCollection(fileStream, sources);
+        this.HttpContext.Response.Headers.Add("Content-Length", lastStream.Length.ToString());
+        this.HttpContext.Response.Headers.Add("Content-Type", "charset=UTF-8");
+        return File(lastStream, "application/octet-stream;charset=UTF-8", Path.GetFileName(path));
+    }
 }
