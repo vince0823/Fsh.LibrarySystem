@@ -106,6 +106,12 @@ public class BookConfig : IEntityTypeConfiguration<Book>
         builder
             .Property(b => b.Name)
                 .HasMaxLength(1024);
+        builder.Navigation(v => v.Items)
+                  .UsePropertyAccessMode(PropertyAccessMode.Field);
+        builder.HasMany(v => v.Items)
+               .WithOne()
+               .HasForeignKey(v => v.BookId)
+               .OnDelete(DeleteBehavior.Cascade);
 
         // 建立索引
         builder.HasIndex(v => new { v.Name, v.IsBorrowed, v.Author, v.BookType });

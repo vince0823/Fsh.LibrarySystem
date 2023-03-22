@@ -1,4 +1,5 @@
-﻿using FSH.Learn.Domain.System.EnumExt;
+﻿using FSH.Learn.Domain.System;
+using FSH.Learn.Domain.System.EnumExt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,6 @@ public class BookDto : IDto
     public string? Address { get; set; }
     public string CreatedBy { get; set; }
     public string? CreateUserName { get; set; }
-    public string? Description { get; set;}
+    public string? Description { get; set; }
+    public ICollection<BookRecordDeatilDto> BookRecords { get; set; }
 }

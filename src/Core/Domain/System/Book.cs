@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace FSH.Learn.Domain.System;
 public class Book : AuditableEntity, IAggregateRoot
 {
+    private readonly List<BookRecord> _items = new();
     public string Name { get; set; } = default!;
     public string Author { get; set; } = default!;
     public BookType BookType { get; set; } = default!;
@@ -16,6 +17,7 @@ public class Book : AuditableEntity, IAggregateRoot
     public Guid BookShelfLayerId { get; set; }
     public string? Description { get; set; }
     public virtual BookShelfLayer BookShelfLayer { get; set; } = default!;
+    public IReadOnlyCollection<BookRecord> Items => _items.AsReadOnly();
 
     public Book()
     {
